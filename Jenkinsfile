@@ -37,6 +37,7 @@ pipeline {
                     def artifactId = readPom('project.artifactId')
                     def version = readPom('project.version')
                     sh "./deploy.sh $artifactId $version"
+                    currentBuild.description = "Deployed $artifactId version $version"
                 }
             }
         }
