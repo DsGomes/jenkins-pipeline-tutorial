@@ -36,6 +36,11 @@ pipeline {
                 script {
                     def artifactId = readPom('project.artifactId')
                     def version = readPom('project.version')
+
+                    withCredentials([string(credentialsId: 'super-deploy-secret', variable: 'SUPER_CREDENTIALS')]) {
+                        sh "./super-deploy.sh $artifactId $version"
+                    }
+
                     sh "./deploy.sh $artifactId $version"
                     currentBuild.description = "Deployed $artifactId version $version"
                 }
